@@ -1,0 +1,16 @@
+
+.user-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+}
+
+.movie-list {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.movies-list {
+    flex-wrap: wrap;
+}
