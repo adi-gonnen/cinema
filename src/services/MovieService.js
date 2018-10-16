@@ -3,21 +3,24 @@ import axios from 'axios';
 import uniqid from 'uniqid'
 
 const API_KEY = 'cf5f5d9f';
-var MOVIES = [];
+// var MOVIES = [{imdbID: 'tt554433', Title: 'dsaS JJkk', Genre: 'ffff'}, {imdbID: 'tt557433', Title: 'dffsaS JJkk'}]; 
+var MOVIES = null;
 
-
-function uploadMovies() {
-    return axios.get(`http://www.omdbapi.com/?s=first&page=2&apikey=${API_KEY}`)
-    .then(res => {
-        // console.log('service:', res.data.Search);
-        MOVIES = res.data.Search;
-        return MOVIES
-    })
-}
 
 function getMovies() {
-    console.log('MOVIES:', MOVIES);
-    return Promise.resolve({MOVIES});
+    // console.log(MOVIES);
+    if (MOVIES === null) {
+        return axios.get(`http://www.omdbapi.com/?s=first&page=2&apikey=${API_KEY}`)
+        .then(res => {
+            MOVIES = res.data.Search;
+            // console.log('service:', MOVIES);
+            return MOVIES
+        })
+    } else return Promise.resolve(MOVIES);
+}
+
+function getUpdatedMovies() {
+    if (MOVIES !== null) return MOVIES
 }
 
 function getMovieById(id) {
@@ -30,14 +33,16 @@ function getMovieById(id) {
 
 
 function _updateMovie(movie) {
-    console.log('movie to update: ', movie);    
-    return new Promise((resolve, reject) => { 
-      const index = MOVIES.findIndex( m => movie.imdbID === m.imdbID)
-      if (index !== -1) {
-        MOVIES[index] = movie
-      }
-      resolve(movie)
-    })
+    // console.log('movie to update: ', movie.Title);    
+    // return new Promise((resolve, reject) => { 
+        // console.log('_update ', MOVIES[0]);        
+        const idx = MOVIES.findIndex( m => movie.imdbID === m.imdbID)
+        if (idx !== -1) {
+            MOVIES[idx] = movie
+            // console.log('update', idx, movie.Title);
+        }
+        // resolve(movie)
+    // })
   }
   
   function _addMovie(movie) {
@@ -48,13 +53,31 @@ function _updateMovie(movie) {
     })
   }
   
-  function saveMovie(movie) {
-    console.log('movie to edit: ', movie);  
-    return movie.imdbID ? _updateMovie(movie) : _addMovie(movie)
+  function saveMovie(newMovie) {
+    var duplicate = false;
+    MOVIES.some(movie => {
+        console.log('name:', movie.Title);
+        if (newMovie.Title === movie.Title) {
+            duplicate = true;
+            return false
+        }
+    });
+    if (!duplicate) return newMovie.imdbID ? _updateMovie(newMovie) : _addMovie(newMovie)
+  }
+
+  function deleteMovie(id) {
+    return new Promise((resolve, reject) => { 
+      const idx = MOVIES.findIndex( movie => movie.imdbID === id)
+      if (idx !== -1) {
+        MOVIES.splice(idx, 1)
+      }
+      resolve()
+    })
   }
 export default {
-    uploadMovies,
     getMovies,
     getMovieById,
-    saveMovie
+    saveMovie,
+    getUpdatedMovies,
+    deleteMovie
 }

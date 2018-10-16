@@ -1,0 +1,12 @@
+.movie-details {
+    border: 1px solid;
+    text-align: center;
+    background-color: bisque;
+    color: rgb(39, 24, 24);
+    max-width: 300px;
+    max-height: 450px;
+    min-height: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    justify-content: space-between;
+}

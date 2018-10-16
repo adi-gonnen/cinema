@@ -35,8 +35,14 @@
 }
 
 .btn {
-    margin: 15px;
+    margin: 0 15px;
 }
+
+.btn:hover {
+    opacity: 0.5;
+}
+
+
 @media (max-width: 980px) {
     .form-edit {
         width: 60%;

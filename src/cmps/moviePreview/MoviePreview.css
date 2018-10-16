@@ -17,3 +17,19 @@
 .genre>span {
     font-weight: bold;
 }
+
+.btn-edit {
+    width: 50px;
+    align-self: center;
+}
+
+.tilte {
+    text-transform: lowercase;
+}
+
+.tilte::first-letter {
+    text-transform: capitalize;
+}
+a>h3 {
+    color: blue;
+}

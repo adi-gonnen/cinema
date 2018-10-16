@@ -6,20 +6,29 @@ import MovieEdit from './cmps/movieEdit/MovieEdit';
 import MovieDetails from './cmps/movieDetails/MovieDetails';
 import MovieService from './services/MovieService';
 import './App.css';
-
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt, faUndo, faSave } from '@fortawesome/free-solid-svg-icons'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+library.add(faEdit)
+library.add(faTrashAlt)
+library.add(faUndo)
+library.add(faSave)
+
+
 class App extends Component {
-  state = {
-    movies: []
-}
-componentDidMount() {
-    MovieService.uploadMovies()
-    .then(data => {
-        console.log('dataaaa', data);
-        this.setState({movies: data})
-    });
-}
+//   state = {
+//     movies: []
+// }
+  componentDidMount() {
+    // console.log('App!!');  
+    //   MovieService.getMovies()
+    //   .then(data => {
+    //       console.log('dataaaa', data);
+    //       // this.setState({movies: data})
+    //   });
+  }
   render() {
     return (
       <Router>
@@ -29,7 +38,7 @@ componentDidMount() {
       </div>
       <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/movie" component={movie} movies={this.state.movies}/>
+            <Route exact path="/movie" component={movie}/>
             <Route exact path="/movie/:movieId" component={MovieDetails} /> 
             <Route exact path="/movie/edit/:movieId" component={MovieEdit} />
           </Switch>
