@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/cinema/static/css/main.67614c0b.chunk.css"
   },
   {
-    "revision": "f647da38ad12f94e51c7062db447fe1f",
+    "revision": "57354f931dd7cad302dee2057cdfa707",
     "url": "/cinema/index.html"
   }
 ];
