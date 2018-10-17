@@ -40,7 +40,7 @@ export default class Home extends Component {
         }
         return (
         <div className="movies flex column">
-            <div class="sub-title flex">
+            <div className="sub-title flex">
                 <p>Let's watch some movies!</p>
                 <button onClick={this.addMovie} className="btn add-btn">Add Movie</button>
             </div>
@@ -49,7 +49,7 @@ export default class Home extends Component {
                     {this.state.movies && this.state.movies.map(movie => (
                         <li className="movie-list" key={movie.imdbID}>
                             {/* <Link to={`/movie/${movie.imdbID}`} movie={movie}> */}
-                                <MoviePreview movie={movie} refreshMovies={this.refreshMovies}/>
+                                <MoviePreview movie={movie}/>
                             {/* </Link> */}
                         </li>
                     ))}

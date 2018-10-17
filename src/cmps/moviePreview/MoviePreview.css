@@ -9,7 +9,7 @@
     margin: 20px;
     padding: 10px;
     justify-content: space-between;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 .director>span {
     font-weight: bold;
@@ -38,8 +38,10 @@
 .title {
     /* display: block; */
     /* text-transform: lowercase; */
-    color: #4d4650c4;
+    color: rgb(161, 148, 188);
+    text-shadow: 1px 1px 1px black;
     text-transform: capitalize;
+    z-index: 5;
 }
 
 .preview-body {
@@ -49,6 +51,7 @@
     width: 180px;
     height: 275px;
     margin: auto;
+    z-index: 3;
 }
 
 .year-container {

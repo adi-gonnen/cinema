@@ -43,6 +43,17 @@ function getMovieById(id) {
         })
 }
 
+function searchMovieById(id) {
+    console.log('id service:', id);
+    var movie = {};
+    MOVIES.some(currMovie => {
+        if (id === currMovie.imdbID) {
+            console.log('movie-service:', currMovie);
+            movie = currMovie;
+        }
+    })
+    return movie;
+}
 
 function _updateMovie(movie) {
     // console.log('movie to update: ', movie.Title);    
@@ -60,9 +71,10 @@ function _updateMovie(movie) {
   
   function _addMovie(movie) {
     return new Promise((resolve, reject) => { 
-        movie.imdbId = uniqid()
-        MOVIES.push(movie)
-        resolve(movie)
+        movie.imdbID = uniqid();
+        movie.Poster = 'img/movie3.png';
+        MOVIES.push(movie);
+        resolve(movie);
     })
   }
   
@@ -104,10 +116,12 @@ function _updateMovie(movie) {
   }
 
   function deleteMovie(id) {
+      console.log('id: ', id);      
     return new Promise((resolve, reject) => { 
       const idx = MOVIES.findIndex( movie => movie.imdbID === id)
       if (idx !== -1) {
         MOVIES.splice(idx, 1)
+        console.log('deleted!');        
       }
       resolve()
     })
@@ -118,5 +132,6 @@ export default {
     saveMovie,
     loadMovies,
     deleteMovie,
-    checkDuplicate
+    checkDuplicate,
+    searchMovieById
 }

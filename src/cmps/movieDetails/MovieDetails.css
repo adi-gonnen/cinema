@@ -9,6 +9,7 @@
     margin: 20px auto;
     padding: 10px;
     justify-content: space-around;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .details-container {
@@ -22,7 +23,8 @@
 .title-details {
     text-transform: capitalize;
     height: 45px;
-    color: #0a0a0b80;
+    color: rgb(161, 148, 188);
+    text-shadow: 1px 1px 1px black;
     margin: auto;
     font-size: 3em;
 }

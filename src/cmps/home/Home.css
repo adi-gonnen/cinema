@@ -27,14 +27,17 @@
     font-size: 2em;
     /* margin-right: 20px; */
     margin: auto;
-    font-family: 'Modern Antiqua', cursive;
+    font-family: 'Dosis', sans-serif;
     /* z-index: 5; */
 }
 
 .add-btn {
     width: 100px !important;
     margin-left: 20px;
-    /* margin: auto; */
+    font-family: 'Dosis', sans-serif;
+    color: white;
+    border-radius: 11px;
+    background-color: rgb(161, 148, 188);
 }
 .movie-preview {
     margin: auto;

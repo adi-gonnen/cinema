@@ -17,12 +17,18 @@ export default class MovieDetails extends Component {
         this.saveMovie = this.saveMovie.bind(this);  
     } 
     componentDidMount() {
-        // console.log('id', this.state.MovieId);
-        MovieService.getMovieById(this.state.movieId)
-        .then(data => {
-            // console.log('movie$$', data);
-            this.setState({movie: data});
-        });
+        // console.log('edit id', this.state.MovieId);
+        // MovieService.getMovieById(this.state.movieId)
+        // .then(data => {
+        //     // console.log('movie$$', data);
+        //     this.setState({movie: data});
+        // });
+        var currMovie = MovieService.searchMovieById(this.state.movieId)
+        // .then(data => {
+            console.log('movie$$', currMovie);
+        //     this.setState({movie: data});
+        // });
+        this.setState({movie: currMovie});
     }
     cancel = () => {
         this.setState({cancel: !this.state.cancel})
@@ -31,10 +37,10 @@ export default class MovieDetails extends Component {
     saveMovie(event) {
         const movie = this.state.movie;
         console.log('movie to be saved:', movie);
-        var keyCount = 0;           //avoid empty lines for edited movie
+        var keyCount = 0;           //avoid empty lines for edited and new movie
         for (var key in movie) {
             if (movie[key] === '') {
-                console.log('fill them all!');
+                console.log('edit- fill them all!');
                 swal("Fill all fields!").then( () => {
                     return;
                 })
@@ -42,8 +48,8 @@ export default class MovieDetails extends Component {
             }    
             keyCount++;   
         }
-        if (keyCount < 7) {         //avoid empty lines for a new movie
-            console.log('fill them all!');            
+        if (keyCount < 5) {         //avoid empty lines for a new movie
+            console.log('new- fill them all!', keyCount);            
             swal("Fill all fields!").then( () => {
                 return;
             })
@@ -51,17 +57,21 @@ export default class MovieDetails extends Component {
         }
         var title = movie.Title
         for (let i=0; i<title.length; i++) {
-            var newTitle = title;
+            // var newTitle = title;
             if (
                 (title.charCodeAt(i) !==32 && title.charCodeAt(i) < 65 ) ||
                 title.charCodeAt(i) > 122 ||
                 (title.charCodeAt(i) > 90 && title.charCodeAt(i) < 97)
                 ) {
                     console.log('i: ', title[i]);                    
-                    newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
-                    i--;
-                    console.log('wrong!:', newTitle); 
-                    title = newTitle; 
+                    swal("Only English caracters!").then( () => {
+                        return;
+                    })
+                    return
+                    // newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
+                    // i--;
+                    // console.log('wrong!:', newTitle); 
+                    // title = newTitle; 
                 }
         }
         const duplicate = MovieService.checkDuplicate(movie);
@@ -109,28 +119,29 @@ export default class MovieDetails extends Component {
         //     this.setState({wrongLine: true});
         // } else this.setState({wrongLine: false});
     }
-        delete = () => {
-            swal({
-              title: "Are you sure you want to delete this movie?",
-              icon: "warning",
-              buttons: ["Cancel", "Delete"],
-              dangerMode: true,
-              className: "swal-warning"
-            }).then(willDelete => {
-              if (willDelete) {
-                MovieService.deleteMovie(this.state.movieId);
-                this.setState({cancel: !this.state.cancel}).then(() => {
-                  swal("Your movie has been deleted!", {
+    delete = () => {
+        swal({
+            title: "Are you sure you want to delete this movie?",
+            icon: "warning",
+            buttons: ["Cancel", "Delete"],
+            dangerMode: true,
+            className: "swal-warning"
+        }).then(willDelete => {
+            if (willDelete) {
+            MovieService.deleteMovie(this.state.movieId)
+                .then(() => {
+                    this.setState({cancel: !this.state.cancel})
+                    swal("Your movie has been deleted!", {
                     icon: "success",
                     timer: 2000,
                     className: "swal-text",
                     button: false
-                  });
+                    });
                 });
-              } else swal.close();
-            });
-        // MovieService.deleteMovie(this.state.movieId);
-        // this.setState({cancel: !this.state.cancel})
+            } else swal.close();
+        });
+    // MovieService.deleteMovie(this.state.movieId);
+    // this.setState({cancel: !this.state.cancel})
     }
     render() {
         if (this.state.cancel) {

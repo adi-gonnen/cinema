@@ -33,17 +33,18 @@ class MoviePreview extends Component {
             return <Redirect to={`/movie`} />
         }
         else if (this.state.edit) {
-            return <Redirect to={{pathname: `/movie/edit/${movie.imdbID}`, refreshMovies: this.props.refreshMovies}}/>
+            // return <Redirect to={`/movie/edit/${movie.imdbID}`}/>
+            return <Redirect to={{pathname: `/movie/edit/${movie.imdbID}`, movie: this.state.movie}} />
         }
-        // var genre = [];
-        // genre = movie.Genre.split(',');
+        var imgSrc = movie.Poster;
+        if (imgSrc === null || imgSrc === 'N/A') imgSrc = 'img/movie3.png'
         return (
         <div className="movie-container flex column">
             <Link to={`/movie/${movie.imdbID}`} movie={movie} className="a-title">
-               <h2 className="title">{movie.Title.toLowerCase()}</h2>
+               <h2 className="title">{movie.Title.toLowerCase().substring(0,36)}</h2>
             </Link>
             {/* <div className="preview-body flex column"> */}
-                <img src={movie.Poster || "img/movie3.png"} alt=""/>
+                <img src={imgSrc || 'img/movie3.png'} alt=""/>
                 <p className="director"><span>Directed by: </span>{movie.Director}</p>
                 <div className="year-container flex">
                     <p className="year">{movie.Year},&nbsp;</p>
