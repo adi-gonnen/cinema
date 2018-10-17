@@ -13,4 +13,36 @@
 
 .movies-list {
     flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.sub-title {
+    margin: 0 auto;
+    
+    /* align-items: center; */
+}
+
+.sub-title>p {
+    font-size: 2em;
+    /* margin-right: 20px; */
+    margin: auto;
+    font-family: 'Modern Antiqua', cursive;
+    /* z-index: 5; */
+}
+
+.add-btn {
+    width: 100px !important;
+    margin-left: 20px;
+    /* margin: auto; */
+}
+.movie-preview {
+    margin: auto;
+}
+
+@media (max-width: 520px) {
+    .sub-title {
+        flex-direction: column;
+        align-items: center;
+    }
 }

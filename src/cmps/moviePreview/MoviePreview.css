@@ -1,35 +1,69 @@
 .movie-container {
-    border: 1px solid;
+    border: 1px solid  #e2d7d7;
     text-align: center;
-    background-color: bisque;
+    background-color: #efefef;
     color: rgb(39, 24, 24);
-    max-width: 300px;
-    max-height: 450px;
+    width: 300px;
+    height: 480px;
     min-height: 200px;
     margin: 20px;
     padding: 10px;
     justify-content: space-between;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .director>span {
     font-weight: bold;
 }
 
-.genre>span {
+.actors>span {
+    font-weight: bold;
+}
+.rating>span {
     font-weight: bold;
 }
 
 .btn-edit {
     width: 50px;
     align-self: center;
+    margin-top: 10px;
+    /* margin: 5px auto; */
 }
 
-.tilte {
-    text-transform: lowercase;
+.a-title {
+    /* text-transform: lowercase; */
+    height: 45px;
+    display: block;
 }
 
-.tilte::first-letter {
+.title {
+    /* display: block; */
+    /* text-transform: lowercase; */
+    color: #4d4650c4;
     text-transform: capitalize;
 }
-a>h3 {
-    color: blue;
+
+.preview-body {
+    justify-items: center;
+}
+.movie-container>img {
+    width: 180px;
+    height: 275px;
+    margin: auto;
+}
+
+.year-container {
+    margin: 0 auto;
+}
+.genre-list {
+    margin: auto;
+    padding: 0;
+}
+.genre {
+    border: 1px solid;
+    list-style-type: none;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 20px;
+    min-width: 60px;
+    background-color: #d1bbbb;
 }

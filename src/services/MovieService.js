@@ -1,25 +1,37 @@
 
 import axios from 'axios';
 import uniqid from 'uniqid'
-
+import swal from "sweetalert";
 const API_KEY = 'cf5f5d9f';
-// var MOVIES = [{imdbID: 'tt554433', Title: 'dsaS JJkk', Genre: 'ffff'}, {imdbID: 'tt557433', Title: 'dffsaS JJkk'}]; 
 var MOVIES = null;
 
 
-function getMovies() {
+function loadMovies() {
     // console.log(MOVIES);
     if (MOVIES === null) {
-        return axios.get(`http://www.omdbapi.com/?s=first&page=2&apikey=${API_KEY}`)
+        return axios.get(`http://www.omdbapi.com/?s=job&type=movie&page=3&apikey=${API_KEY}`)
         .then(res => {
-            MOVIES = res.data.Search;
+            // console.log(res.data.Search);            
+            MOVIES = [];
+            var prms = []
+            res.data.Search.forEach(movie => {
+                prms.push(getMovieById(movie.imdbID)
+                .then (data  => {
+                    // console.log('movie from service: ', movie);                
+                    MOVIES.push(data)
+                    // console.log('movies:', MOVIES);
+                }))
+            })
+            return Promise.all(prms);
+            // MOVIES = res.data.Search;
+        }).then ( () => {
             // console.log('service:', MOVIES);
             return MOVIES
         })
     } else return Promise.resolve(MOVIES);
 }
 
-function getUpdatedMovies() {
+function getMovies() {
     if (MOVIES !== null) return MOVIES
 }
 
@@ -41,6 +53,7 @@ function _updateMovie(movie) {
             MOVIES[idx] = movie
             // console.log('update', idx, movie.Title);
         }
+        // MOVIES = Object.assign({}, MOVIES);
         // resolve(movie)
     // })
   }
@@ -53,15 +66,40 @@ function _updateMovie(movie) {
     })
   }
   
+  function checkDuplicate(newMovie) {
+    var duplicate = false;
+    MOVIES.some(movie => {
+        // console.log('name:', movie.Title);
+        if (newMovie.Title === movie.Title) {
+            if (newMovie.imdbID !== movie.imdbID) {         //not the same movie
+                duplicate = true;
+                swal("This movie already Exist!").then( () => {
+                    // console.log('duplicate1: ', duplicate);    
+                    return false;
+                })
+                // return false
+            }
+        }
+    });
+    return duplicate;
+  }
+
   function saveMovie(newMovie) {
     var duplicate = false;
     MOVIES.some(movie => {
-        console.log('name:', movie.Title);
+        // console.log('name:', movie.Title);
         if (newMovie.Title === movie.Title) {
-            duplicate = true;
-            return false
+            if (newMovie.imdbID !== movie.imdbID) {         //not the same movie
+                duplicate = true;
+                swal("This movie already Exist!").then( () => {
+                    // console.log('duplicate1: ', duplicate);    
+                    return false;
+                })
+                // return false
+            }
         }
     });
+    // console.log('duplicate2: ', duplicate);    
     if (!duplicate) return newMovie.imdbID ? _updateMovie(newMovie) : _addMovie(newMovie)
   }
 
@@ -78,6 +116,7 @@ export default {
     getMovies,
     getMovieById,
     saveMovie,
-    getUpdatedMovies,
-    deleteMovie
+    loadMovies,
+    deleteMovie,
+    checkDuplicate
 }

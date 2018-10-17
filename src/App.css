@@ -1,11 +1,17 @@
 .App {
   text-align: center;
+  font-family: "Ubuntu"
 }
 
 p, h1,h2, h3, h4, h5, h6, li, body{
   margin: 0;
   padding: 0;
   text-decoration: none;
+  
+  /* font-family: "Ubuntu"; */
+}
+body {
+  margin-top: 150px
 }
 a {
   text-decoration: none;
@@ -23,4 +29,7 @@ a:visited {
 
 .btn {
   cursor: pointer;
+}
+.body::child {
+  margin-top: 250px;
 }

@@ -3,6 +3,7 @@ import './MovieEdit.css';
 import MovieService from '../../services/MovieService';
 import { Route, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import swal from "sweetalert";
 
 export default class MovieDetails extends Component {
     constructor(props, context) {
@@ -34,17 +35,23 @@ export default class MovieDetails extends Component {
         for (var key in movie) {
             if (movie[key] === '') {
                 console.log('fill them all!');
-                return;
+                swal("Fill all fields!").then( () => {
+                    return;
+                })
+                return
             }    
             keyCount++;   
         }
         if (keyCount < 7) {         //avoid empty lines for a new movie
             console.log('fill them all!');            
-            return;
+            swal("Fill all fields!").then( () => {
+                return;
+            })
+            return
         }
         var title = movie.Title
-        var newTitle = title;
-        for (let i=0; i<movie.Title.length; i++) {
+        for (let i=0; i<title.length; i++) {
+            var newTitle = title;
             if (
                 (title.charCodeAt(i) !==32 && title.charCodeAt(i) < 65 ) ||
                 title.charCodeAt(i) > 122 ||
@@ -52,35 +59,22 @@ export default class MovieDetails extends Component {
                 ) {
                     console.log('i: ', title[i]);                    
                     newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
+                    i--;
                     console.log('wrong!:', newTitle); 
                     title = newTitle; 
                 }
         }
-        movie.Title = newTitle;
+        const duplicate = MovieService.checkDuplicate(movie);
+        if (duplicate) return;
+        movie.Title = title;
         event.preventDefault();
-        MovieService.saveMovie(this.state.movie);
-        this.setState({cancel: !this.state.cancel})
+        MovieService.saveMovie(movie);
+        this.setState({cancel: !this.state.cancel});
+        // this.props.location.refreshMovies();
     }
     handleTitle = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Title = event.target.value;
-        // var title = newMovie.Title
-        // var newTitle = title;
-        // for (let i=0; i<newMovie.Title.length-1; i++) {
-        //     if (
-        //         (title.charCodeAt(i) !==32 && title.charCodeAt(i) < 65 ) ||
-        //         title.charCodeAt(i) > 122 ||
-        //         (title.charCodeAt(i) > 90 && title.charCodeAt(i) < 97)
-        //         ) {
-                    
-        //                 // console.log(title(i));
-                        
-        //             newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
-        //             // title = newTitle;                  
-        //             console.log('wrong!:', title);  
-        //         }
-        // }
-        // newMovie.Title = newTitle;
         this.setState({movie: newMovie});
     }
     handleDirector = (event) => {
@@ -115,9 +109,28 @@ export default class MovieDetails extends Component {
         //     this.setState({wrongLine: true});
         // } else this.setState({wrongLine: false});
     }
-    delete = () => {
-        MovieService.deleteMovie(this.state.movieId);
-        this.setState({cancel: !this.state.cancel})
+        delete = () => {
+            swal({
+              title: "Are you sure you want to delete this movie?",
+              icon: "warning",
+              buttons: ["Cancel", "Delete"],
+              dangerMode: true,
+              className: "swal-warning"
+            }).then(willDelete => {
+              if (willDelete) {
+                MovieService.deleteMovie(this.state.movieId);
+                this.setState({cancel: !this.state.cancel}).then(() => {
+                  swal("Your movie has been deleted!", {
+                    icon: "success",
+                    timer: 2000,
+                    className: "swal-text",
+                    button: false
+                  });
+                });
+              } else swal.close();
+            });
+        // MovieService.deleteMovie(this.state.movieId);
+        // this.setState({cancel: !this.state.cancel})
     }
     render() {
         if (this.state.cancel) {
@@ -126,7 +139,7 @@ export default class MovieDetails extends Component {
         const movie = this.state.movie;
         return (
             <div className="edit flex column">
-                <h1 className="edit-title">{movie.imdbID? 'Edit' : 'Add'}</h1>
+                <h1 className="edit-title">{movie.imdbID? 'Edit' : 'Add Movie'}</h1>
                 <div className="form-edit flex column">
                     <div className="input-container flex">
                         <p>Title:</p>
@@ -158,17 +171,17 @@ export default class MovieDetails extends Component {
                             className = "input-edit" type="text"
                             onChange={this.handleGenre}/>
                     </div>
-                </div>
-                <div className="btns flex">
-                    <button className="btn" onClick={this.saveMovie}>
-                        <FontAwesomeIcon icon="save" title="save"/>
-                    </button>
-                    <button className="btn" onClick={this.delete}>
-                        <FontAwesomeIcon icon="trash-alt" title="delete"/>
-                    </button>
-                    <button className="btn" onClick={this.cancel}>
-                        <FontAwesomeIcon icon="undo" title="back"/> 
-                    </button>
+                    <div className="btns btns-edit flex">
+                        <button className="btn" onClick={this.saveMovie}>
+                            <FontAwesomeIcon icon="save" title="save"/>
+                        </button>
+                        <button className="btn" onClick={this.delete}>
+                            <FontAwesomeIcon icon="trash-alt" title="delete"/>
+                        </button>
+                        <button className="btn" onClick={this.cancel}>
+                            <FontAwesomeIcon icon="undo" title="back"/> 
+                        </button>
+                    </div>
                 </div>
             </div>
         )

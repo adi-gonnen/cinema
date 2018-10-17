@@ -18,17 +18,7 @@ library.add(faSave)
 
 
 class App extends Component {
-//   state = {
-//     movies: []
-// }
-  componentDidMount() {
-    // console.log('App!!');  
-    //   MovieService.getMovies()
-    //   .then(data => {
-    //       console.log('dataaaa', data);
-    //       // this.setState({movies: data})
-    //   });
-  }
+
   render() {
     return (
       <Router>
@@ -36,7 +26,7 @@ class App extends Component {
       <div className="App">
         <Header className="App-header"/>
       </div>
-      <Switch>
+      <Switch className="body">
             <Route exact path="/" component={Home} />
             <Route exact path="/movie" component={movie}/>
             <Route exact path="/movie/:movieId" component={MovieDetails} /> 
