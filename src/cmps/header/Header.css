@@ -47,8 +47,8 @@
 
    @media (max-width: 540px) {
     .header-title {
-        font-size: 2.5em;
-        margin-left: 5px;
+        font-size: 2em;
+        margin-left: 15px;
         width: 63%;
     }
     .header-img {
