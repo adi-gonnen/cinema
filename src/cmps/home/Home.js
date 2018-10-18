@@ -43,8 +43,11 @@ export default class Home extends Component {
         <div className="movies flex column">
             <div className="sub-title flex">
                 <p>Let's watch some movies!</p>
-                <button onClick={this.addMovie} className="btn add-btn"><span>+</span>
-                    <FontAwesomeIcon icon="video" title="add movie"/>
+                <button onClick={this.addMovie} className="btn add-btn">
+                <div className="flex plus-add">
+                    {/* <span>+</span> */}
+                    <FontAwesomeIcon icon="plus" title="add movie"/>
+                </div>
                 </button>
             </div>
             <div className="movie-preview">

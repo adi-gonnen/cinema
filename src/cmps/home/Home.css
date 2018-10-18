@@ -25,7 +25,7 @@
 
 .sub-title>p {
     font-size: 2em;
-    /* margin-right: 20px; */
+    margin-right: 20px;
     margin-top: 10px;
     font-family: 'Dosis', sans-serif;
     /* z-index: 5; */
@@ -40,8 +40,12 @@
     /* background-color: rgb(161, 148, 188); */
     /* cursor: pointer; */
 }
-.add-btn>span {
+.plus-add {
+    justify-content: center;
+}
+.plus-add>span {
     margin-right: 5px;
+    /* margin-bottom: 3px; */
     font-weight: bold;
 }
 .movie-preview {

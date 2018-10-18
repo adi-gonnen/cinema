@@ -44,12 +44,13 @@
 .btn {
     align-self: center;
     margin-top: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 7px;
-    font-size: 1.1em;
-    width: 75px;
-    height: 35px
+    background-color: #837090;
+    color: white;
+    padding: 7px 5px 5px 5px;
+    border-radius: 3px;
+    font-size: 1em;
+    width: 80px;
+    height: 34px;
 }
 
 .btn:hover {
