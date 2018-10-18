@@ -59,21 +59,21 @@ export default class MovieDetails extends Component {
         }
         var title = movie.Title
         for (let i=0; i<title.length; i++) {
-            // var newTitle = title;
+            var newTitle = title;
             if (
                 (title.charCodeAt(i) !==32 && title.charCodeAt(i) < 65 ) ||
                 title.charCodeAt(i) > 122 ||
                 (title.charCodeAt(i) > 90 && title.charCodeAt(i) < 97)
                 ) {
-                    console.log('i: ', title[i]);                    
-                    swal("Only English caracters!").then( () => {
-                        return;
-                    })
-                    return
-                    // newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
-                    // i--;
-                    // console.log('wrong!:', newTitle); 
-                    // title = newTitle; 
+                    // console.log('i: ', title[i]);                    
+                    // swal("Only English characters!").then( () => {
+                    //     return;
+                    // })
+                    // return
+                    newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
+                    i--;
+                    console.log('wrong!:', newTitle); 
+                    title = newTitle; 
                 }
         }
         const duplicate = MovieService.checkDuplicate(movie);
@@ -112,9 +112,10 @@ export default class MovieDetails extends Component {
         console.log('newDate: ', newDate, 'dateReleased', dateReleased);
         var fullDate = '';
         var month = MovieService.convertMonth(newDate.getMonth());
-        console.log(month);
+        // console.log(month);
         fullDate = newDate.getDate()+' ' + month +' ' + newDate.getFullYear();
-        console.log('fullDate: ', fullDate);
+        newMovie.Year = newDate.getFullYear();
+        // console.log('fullDate: ', fullDate);
         newMovie.Released = event.target.value;
         this.setState({movieDate: fullDate});
         this.setState({movie: newMovie});
@@ -136,26 +137,30 @@ export default class MovieDetails extends Component {
         // } else this.setState({wrongLine: false});
     }
     delete = () => {
-        swal({
-            title: "Are you sure you want to delete this movie?",
-            icon: "warning",
-            buttons: ["Cancel", "Delete"],
-            dangerMode: true,
-            className: "swal-warning"
-        }).then(willDelete => {
-            if (willDelete) {
-            MovieService.deleteMovie(this.state.movieId)
-                .then(() => {
-                    this.setState({cancel: !this.state.cancel})
-                    swal("Your movie has been deleted!", {
-                    icon: "success",
-                    timer: 2000,
-                    className: "swal-text",
-                    button: false
-                    });
-                });
-            } else swal.close();
-        });
+        MovieService.deleteMovie(this.state.movieId)
+        .then ( () => {
+            this.setState({cancel: !this.state.cancel})
+        })
+        // swal({
+        //     title: "Are you sure you want to delete this movie?",
+        //     icon: "warning",
+        //     buttons: ["Cancel", "Delete"],
+        //     dangerMode: true,
+        //     className: "swal-warning"
+        // }).then(willDelete => {
+        //     if (willDelete) {
+        //     MovieService.deleteMovie(this.state.movieId)
+        //         .then(() => {
+        //             this.setState({cancel: !this.state.cancel})
+        //             swal("Your movie has been deleted!", {
+        //                 icon: "success",
+        //                 timer: 2000,
+        //                 className: "swal-text",
+        //                 button: false
+        //             });
+        //         });
+        //     } else swal.close();
+        // });
     // MovieService.deleteMovie(this.state.movieId);
     // this.setState({cancel: !this.state.cancel})
     }
@@ -213,10 +218,10 @@ export default class MovieDetails extends Component {
                         <button className="btn" onClick={this.saveMovie}>
                             <FontAwesomeIcon icon="save" title="save"/>
                         </button>
-                        <button className="btn" onClick={this.delete}>
+                        <button className="btn btn-delete ml15" onClick={this.delete}>
                             <FontAwesomeIcon icon="trash-alt" title="delete"/>
                         </button>
-                        <button className="btn" onClick={this.cancel}>
+                        <button className="btn btn-back ml15" onClick={this.cancel}>
                             <FontAwesomeIcon icon="undo" title="back"/> 
                         </button>
                     </div>

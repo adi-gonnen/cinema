@@ -53,4 +53,8 @@
         flex-direction: column;
         align-items: center;
     }
+    .sub-title>p {
+        font-size: 1.5em;
+        margin-left: 15px;
+    }
 }

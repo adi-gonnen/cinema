@@ -16,6 +16,9 @@
     font-weight: bold;
 }
 
+/* .director>span {
+    font-weight: bold;
+} */
 .btn-edit {
     /* width: 50px; */
     /* align-self: center; */
@@ -44,10 +47,11 @@
 .preview-body {
     justify-items: center;
 }
-.movie-container>img {
+.a-img>img {
     width: 180px;
     height: 275px;
     margin: auto;
+    box-shadow: 10px 3px 7px 1px rgba(98, 98, 132, 0.5)
     /* z-index: 3; */
 }
 
@@ -66,4 +70,8 @@
     border-radius: 8px;
     border-radius: 4px;
     min-width: 80px;
+}
+
+@media (max-width: 540px) {
+    width: 85%;
 }

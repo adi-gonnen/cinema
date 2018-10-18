@@ -36,27 +36,32 @@ export default class MovieDetails extends Component {
         // console.log('back', this.state.back);
     }
     delete = () => {
-        swal({
-            title: "Are you sure you want to delete this movie?",
-            icon: "warning",
-            buttons: ["Cancel", "Delete"],
-            dangerMode: true,
-            className: "swal-warning"
-        }).then(willDelete => {
-            if (willDelete) {
-            MovieService.deleteMovie(this.state.movieId)
-                .then(() => {
-                    this.setState({back: !this.state.back})
-                    swal("Your movie has been deleted!", {
-                    icon: "success",
-                    timer: 2000,
-                    className: "swal-text",
-                    button: false
-                    });
-                });
-            } else swal.close();
-        });
+        MovieService.deleteMovie(this.state.movieId)
+        .then ( () => {
+            this.setState({back: !this.state.back})
+        })
     }
+    //     swal({
+    //         title: "Are you sure you want to delete this movie?",
+    //         icon: "warning",
+    //         buttons: ["Cancel", "Delete"],
+    //         dangerMode: true,
+    //         className: "swal-warning"
+    //     }).then(willDelete => {
+    //         if (willDelete) {
+    //         MovieService.deleteMovie(this.state.movieId)
+    //             .then(() => {
+    //                 this.setState({back: !this.state.back})
+    //                 swal("Your movie has been deleted!", {
+    //                 icon: "success",
+    //                 timer: 2000,
+    //                 className: "swal-text",
+    //                 button: false
+    //                 });
+    //             });
+    //         } else swal.close();
+    //     });
+    // }
     render() {
         if (this.state.back) {
             return <Redirect to={`/`} />
@@ -75,12 +80,12 @@ export default class MovieDetails extends Component {
                         <img src={imgSrc || 'img/movie3.png'} alt=""/>
                         <div className="movie-text flex column">
                         {/* <div class="movie-info flex column"> */}
-                            <p className="director"><span className="bold">Directed by: </span>{movie.Director}</p>
-                            <p className="actors"><span className="bold">Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
-                            <p className="rating"><span className="bold">IMDb rating: </span>{movie.imdbRating? movie.imdbRating: '2.5'}/10</p>
-                            <p className="released"><span className="bold">Released: </span>{movie.Released}</p>
+                            <p className="director mb15"><span className="bold">Directed by: </span>{movie.Director}</p>
+                            <p className="actors mb15"><span className="bold">Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
+                            <p className="rating mb15"><span className="bold">IMDb rating: </span>{movie.imdbRating? movie.imdbRating: '2.5'}/10</p>
+                            <p className="released mb15"><span className="bold">Released: </span>{movie.Released}</p>
                         {/* </div> */}
-                            <div className="year-container flex">
+                            <div className="year-container mb15 flex">
                                 {/* <p className="year">{movie.Year},&nbsp;</p> */}
                                 <p className="runtime"> {movie.Runtime},&nbsp;</p>
                                 <p className="language"> {movie.Language? movie.Language: 'Jibrish'}</p>
@@ -92,10 +97,10 @@ export default class MovieDetails extends Component {
                         <button className="btn btn-edit" onClick={this.editMovie}>
                             <FontAwesomeIcon icon="edit" title="edit"/>
                         </button>
-                        <button className="btn btn-delete" onClick={this.delete}>
+                        <button className="btn btn-delete ml15" onClick={this.delete}>
                             <FontAwesomeIcon icon="trash-alt" title="delete"/>
                         </button>
-                        <button className="btn btn-back" onClick={this.back}>
+                        <button className="btn btn-back ml15" onClick={this.back}>
                             <FontAwesomeIcon icon="undo" title="back"/> 
                         </button>
                     </div>

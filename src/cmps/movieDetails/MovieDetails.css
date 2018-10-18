@@ -19,6 +19,7 @@
 .details-container>img {
     width: 180px;
     height: 275px;
+    box-shadow: 10px 3px 7px 1px rgba(98, 98, 132, 0.5)
 }
 
 .title-details {
@@ -33,12 +34,15 @@
 .movie-text {
     justify-content: space-between;
 }
-.director, .actors {
+.mb15 {
     margin-bottom: 15px;
 }
-.btn-delete, .btn-back {
+.ml15 {
     margin-left: 15px;
 }
+/* .btn-delete, .btn-back {
+    margin-left: 15px;
+} */
 
 .plot {
     margin: 10px;
@@ -54,7 +58,10 @@
         margin: auto;
     }
     .movie-details {
-        height: 450px;
-
+        height: 575px;
+        width: 85%;
+    }
+    .title-details {
+        font-size: 1.5em;
     }
 }
