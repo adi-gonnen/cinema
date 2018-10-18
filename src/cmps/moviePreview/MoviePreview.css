@@ -1,6 +1,5 @@
 .movie-container {
     border: 1px solid  #e2d7d7;
-    /* box-shadow: 12px 12px 2px 1px rgba(98, 98, 132, 0.2); */
     text-align: center;
     background-color: #efefef;
     color: rgb(39, 24, 24);
@@ -20,32 +19,14 @@
 .director {
     height: 35px;
 }
-/* .director>span {
-    font-weight: bold;
-} */
-.btn-edit {
-    /* width: 50px; */
-    /* align-self: center; */
-    /* margin-top: 10px; */
-    /* background-color: white;
-    padding: 5px;
-    border-radius: 7px; */
-    /* margin: 5px auto; */
-}
-
 .a-title {
-    /* text-transform: lowercase; */
     height: 55px;
     display: block;
 }
 
 .title {
-    /* display: block; */
-    /* text-transform: lowercase; */
     color: #837090;
-    /* text-shadow: 1px 1px 1px black; */
     text-transform: capitalize;
-    /* z-index: 5; */
 }
 
 .preview-body {

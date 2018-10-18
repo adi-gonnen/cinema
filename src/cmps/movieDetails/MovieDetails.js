@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import './MovieDetails.css';
 import MovieService from '../../services/MovieService';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import swal from "sweetalert";
+import './MovieDetails.css';
 
 export default class MovieDetails extends Component {
     constructor(props, context) {
@@ -11,29 +10,19 @@ export default class MovieDetails extends Component {
         this.state = {
             movieId: this.props.match.params.movieId,
             movie: {},
-            // movie: this.props.location,
             back: false,
             edit: false
         }
     }
     componentDidMount() {
-        // MovieService.getMovieById(this.state.movieId)
-        // .then(data => {
-        //     // console.log('movie$$', data);
-        //     this.setState({movie: data});
-        // });
-        console.log('id', this.state.MovieId);
-        var currMovie = MovieService.searchMovieById(this.state.movieId)
-            console.log('movie$$', currMovie);
+        var currMovie = MovieService.searchMovieById(this.state.movieId);
         this.setState({movie: currMovie});
     }
     editMovie = () => {
-        // console.log('movies: ', MovieService.getUpdatedMovies());
         this.setState({edit: !this.state.edit})
     }
     back = () => {
         this.setState({back: !this.state.back})
-        // console.log('back', this.state.back);
     }
     delete = () => {
         MovieService.deleteMovie(this.state.movieId)
@@ -41,27 +30,7 @@ export default class MovieDetails extends Component {
             this.setState({back: !this.state.back})
         })
     }
-    //     swal({
-    //         title: "Are you sure you want to delete this movie?",
-    //         icon: "warning",
-    //         buttons: ["Cancel", "Delete"],
-    //         dangerMode: true,
-    //         className: "swal-warning"
-    //     }).then(willDelete => {
-    //         if (willDelete) {
-    //         MovieService.deleteMovie(this.state.movieId)
-    //             .then(() => {
-    //                 this.setState({back: !this.state.back})
-    //                 swal("Your movie has been deleted!", {
-    //                 icon: "success",
-    //                 timer: 2000,
-    //                 className: "swal-text",
-    //                 button: false
-    //                 });
-    //             });
-    //         } else swal.close();
-    //     });
-    // }
+
     render() {
         if (this.state.back) {
             return <Redirect to={`/`} />
@@ -79,14 +48,11 @@ export default class MovieDetails extends Component {
                     <div className="details-container flex">
                         <img src={imgSrc || 'img/movie3.png'} alt=""/>
                         <div className="movie-text flex column">
-                        {/* <div class="movie-info flex column"> */}
                             <p className="director mb15"><span className="bold">Directed by: </span>{movie.Director}</p>
                             <p className="actors mb15"><span className="bold">Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
                             <p className="rating mb15"><span className="bold">IMDb rating: </span>{movie.imdbRating? movie.imdbRating: '2.5'}/10</p>
                             <p className="released mb15"><span className="bold">Released: </span>{movie.Released}</p>
-                        {/* </div> */}
                             <div className="year-container mb15 flex">
-                                {/* <p className="year">{movie.Year},&nbsp;</p> */}
                                 <p className="runtime"> {movie.Runtime},&nbsp;</p>
                                 <p className="language"> {movie.Language? movie.Language: 'Jibrish'}</p>
                             </div>

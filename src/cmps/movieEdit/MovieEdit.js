@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import './MovieEdit.css';
 import MovieService from '../../services/MovieService';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import swal from "sweetalert";
+import './MovieEdit.css';
 
 export default class MovieDetails extends Component {
     constructor(props, context) {
@@ -13,27 +13,15 @@ export default class MovieDetails extends Component {
             movieId: this.props.match.params.movieId,
             movie: {},
             movieDate: null
-            // wrongLine: false
         };
         this.saveMovie = this.saveMovie.bind(this);  
     } 
     componentDidMount() {
-        // console.log('edit id', this.state.MovieId);
-        // MovieService.getMovieById(this.state.movieId)
-        // .then(data => {
-        //     // console.log('movie$$', data);
-        //     this.setState({movie: data});
-        // });
         var currMovie = MovieService.searchMovieById(this.state.movieId)
-        // .then(data => {
-            console.log('movie$$', currMovie);
-        //     this.setState({movie: data});
-        // });
         this.setState({movie: currMovie});
     }
     cancel = () => {
         this.setState({cancel: !this.state.cancel})
-        // console.log('back', this.state.back);
     }
     saveMovie(event) {
         const movie = this.state.movie;
@@ -42,7 +30,6 @@ export default class MovieDetails extends Component {
         var keyCount = 0;           //avoid empty lines for edited and new movie
         for (var key in movie) {
             if (movie[key] === '') {
-                console.log('edit- fill them all!');
                 swal("Fill all fields!").then( () => {
                     return;
                 })
@@ -51,7 +38,6 @@ export default class MovieDetails extends Component {
             keyCount++;   
         }
         if (keyCount < 5) {         //avoid empty lines for a new movie
-            console.log('new- fill them all!', keyCount);            
             swal("Fill all fields!").then( () => {
                 return;
             })
@@ -65,28 +51,17 @@ export default class MovieDetails extends Component {
                 title.charCodeAt(i) > 122 ||
                 (title.charCodeAt(i) > 90 && title.charCodeAt(i) < 97)
                 ) {
-                    // console.log('i: ', title[i]);                    
-                    // swal("Only English characters!").then( () => {
-                    //     return;
-                    // })
-                    // return
                     newTitle = title.substring(0,i) + title.substring(i+1, title.length); 
                     i--;
-                    console.log('wrong!:', newTitle); 
                     title = newTitle; 
                 }
         }
         const duplicate = MovieService.checkDuplicate(title, this.state.movieId);
-        if (duplicate) {
-            // this.setState({cancel: !this.state.cancel});
-            console.log('this.state.cancel', this.state.cancel);            
-            return;
-        }
+        if (duplicate) return;
         movie.Title = title;
         event.preventDefault();
         MovieService.saveMovie(movie);
         this.setState({cancel: !this.state.cancel});
-        // this.props.location.refreshMovies();
     }
     handleTitle = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
@@ -97,29 +72,20 @@ export default class MovieDetails extends Component {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Director = event.target.value;
         this.setState({movie: newMovie});
-        // if (event.target.value === '')  {
-        //     this.setState({wrongLine: true});
-        // } else this.setState({wrongLine: false});
     }
     handleYear = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Year = event.target.value;
         this.setState({movie: newMovie});
-        // if (event.target.value === '')  {
-        //     this.setState({wrongLine: true});
-        // } else this.setState({wrongLine: false});
     }
     handleReleased = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         var dateReleased = Date.parse(event.target.value);
         var newDate = new Date(dateReleased);
-        console.log('newDate: ', newDate, 'dateReleased', dateReleased);
         var fullDate = '';
         var month = MovieService.convertMonth(newDate.getMonth());
-        // console.log(month);
         fullDate = newDate.getDate()+' ' + month +' ' + newDate.getFullYear();
         newMovie.Year = newDate.getFullYear();
-        // console.log('fullDate: ', fullDate);
         newMovie.Released = event.target.value;
         this.setState({movieDate: fullDate});
         this.setState({movie: newMovie});
@@ -128,45 +94,17 @@ export default class MovieDetails extends Component {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Runtime = event.target.value;
         this.setState({movie: newMovie});
-        // if (event.target.value === '')  {
-        //     this.setState({wrongLine: true});
-        // } else this.setState({wrongLine: false});
     }
     handleGenre = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Genre = event.target.value;
         this.setState({movie: newMovie});
-        // if (event.target.value === '')  {
-        //     this.setState({wrongLine: true});
-        // } else this.setState({wrongLine: false});
     }
     delete = () => {
         MovieService.deleteMovie(this.state.movieId)
         .then ( () => {
             this.setState({cancel: !this.state.cancel})
         })
-        // swal({
-        //     title: "Are you sure you want to delete this movie?",
-        //     icon: "warning",
-        //     buttons: ["Cancel", "Delete"],
-        //     dangerMode: true,
-        //     className: "swal-warning"
-        // }).then(willDelete => {
-        //     if (willDelete) {
-        //     MovieService.deleteMovie(this.state.movieId)
-        //         .then(() => {
-        //             this.setState({cancel: !this.state.cancel})
-        //             swal("Your movie has been deleted!", {
-        //                 icon: "success",
-        //                 timer: 2000,
-        //                 className: "swal-text",
-        //                 button: false
-        //             });
-        //         });
-        //     } else swal.close();
-        // });
-    // MovieService.deleteMovie(this.state.movieId);
-    // this.setState({cancel: !this.state.cancel})
     }
     
     render() {
@@ -193,15 +131,8 @@ export default class MovieDetails extends Component {
                             className = "input-edit" type="text"
                             onChange={this.handleDirector}/>
                     </div>
-                    {/* <div className="input-container flex">
-                        <p>Year: </p>
-                        <input value={this.state.movie.Released}
-                            className = "input-edit"
-                            onChange={this.handleYear}/>
-                    </div> */}
                     <div className="input-container flex">
                         <p>Released: </p>
-                        {/* <input value={date} */}
                         <input value={this.state.movie.Released}
                             className = "input-edit" type="date"
                             onChange={this.handleReleased}/>

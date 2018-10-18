@@ -4,10 +4,8 @@ import Home from './cmps/home/Home';
 import movie from './cmps/home/Home';
 import MovieEdit from './cmps/movieEdit/MovieEdit';
 import MovieDetails from './cmps/movieDetails/MovieDetails';
-import MovieService from './services/MovieService';
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt, faUndo, faSave, faVideo, faInfo, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
