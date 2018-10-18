@@ -3,6 +3,7 @@ import MoviePreview from '../moviePreview/MoviePreview';
 import MovieService from '../../services/MovieService';
 import {Link} from 'react-router-dom';
 import { Route, Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Home.css';
 
 import axios from 'axios';
@@ -42,7 +43,9 @@ export default class Home extends Component {
         <div className="movies flex column">
             <div className="sub-title flex">
                 <p>Let's watch some movies!</p>
-                <button onClick={this.addMovie} className="btn add-btn">Add Movie</button>
+                <button onClick={this.addMovie} className="btn add-btn"><span>+</span>
+                    <FontAwesomeIcon icon="video" title="add movie"/>
+                </button>
             </div>
             <div className="movie-preview">
                 <ul className="movies-list flex">

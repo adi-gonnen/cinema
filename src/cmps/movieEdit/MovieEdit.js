@@ -12,6 +12,7 @@ export default class MovieDetails extends Component {
             cancel: false,
             movieId: this.props.match.params.movieId,
             movie: {},
+            movieDate: null
             // wrongLine: false
         };
         this.saveMovie = this.saveMovie.bind(this);  
@@ -36,6 +37,7 @@ export default class MovieDetails extends Component {
     }
     saveMovie(event) {
         const movie = this.state.movie;
+        if (this.state.movieDate) movie.Released = this.state.movieDate;
         console.log('movie to be saved:', movie);
         var keyCount = 0;           //avoid empty lines for edited and new movie
         for (var key in movie) {
@@ -103,6 +105,20 @@ export default class MovieDetails extends Component {
         //     this.setState({wrongLine: true});
         // } else this.setState({wrongLine: false});
     }
+    handleReleased = (event) => {
+        const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
+        var dateReleased = Date.parse(event.target.value);
+        var newDate = new Date(dateReleased);
+        console.log('newDate: ', newDate, 'dateReleased', dateReleased);
+        var fullDate = '';
+        var month = MovieService.convertMonth(newDate.getMonth());
+        console.log(month);
+        fullDate = newDate.getDate()+' ' + month +' ' + newDate.getFullYear();
+        console.log('fullDate: ', fullDate);
+        newMovie.Released = event.target.value;
+        this.setState({movieDate: fullDate});
+        this.setState({movie: newMovie});
+    }
     handleRuntime = (event) => {
         const newMovie = JSON.parse(JSON.stringify(this.state.movie ))
         newMovie.Runtime = event.target.value;
@@ -143,11 +159,15 @@ export default class MovieDetails extends Component {
     // MovieService.deleteMovie(this.state.movieId);
     // this.setState({cancel: !this.state.cancel})
     }
+    
     render() {
         if (this.state.cancel) {
             return <Redirect to={`/`} />
         }
         const movie = this.state.movie;
+        var date = new Date();
+        date.setTime(Date.parse(movie.Released));
+
         return (
             <div className="edit flex column">
                 <h1 className="edit-title">{movie.imdbID? 'Edit' : 'Add Movie'}</h1>
@@ -164,11 +184,18 @@ export default class MovieDetails extends Component {
                             className = "input-edit" type="text"
                             onChange={this.handleDirector}/>
                     </div>
-                    <div className="input-container flex">
+                    {/* <div className="input-container flex">
                         <p>Year: </p>
-                        <input value={this.state.movie.Year}
-                            className = "input-edit" type="number"
+                        <input value={this.state.movie.Released}
+                            className = "input-edit"
                             onChange={this.handleYear}/>
+                    </div> */}
+                    <div className="input-container flex">
+                        <p>Released: </p>
+                        {/* <input value={date} */}
+                        <input value={this.state.movie.Released}
+                            className = "input-edit" type="date"
+                            onChange={this.handleReleased}/>
                     </div>
                     <div className="input-container flex">
                         <p>runtime: </p>

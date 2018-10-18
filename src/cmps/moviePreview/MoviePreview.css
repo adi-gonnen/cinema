@@ -1,5 +1,6 @@
 .movie-container {
     border: 1px solid  #e2d7d7;
+    box-shadow: 12px 12px 2px 1px rgba(98, 98, 132, 0.2);
     text-align: center;
     background-color: #efefef;
     color: rgb(39, 24, 24);
@@ -11,37 +12,33 @@
     justify-content: space-between;
     font-family: 'Dosis', sans-serif;
 }
-.director>span {
-    font-weight: bold;
-}
-
-.actors>span {
-    font-weight: bold;
-}
-.rating>span {
+.bold {
     font-weight: bold;
 }
 
 .btn-edit {
-    width: 50px;
-    align-self: center;
-    margin-top: 10px;
+    /* width: 50px; */
+    /* align-self: center; */
+    /* margin-top: 10px; */
+    /* background-color: white;
+    padding: 5px;
+    border-radius: 7px; */
     /* margin: 5px auto; */
 }
 
 .a-title {
     /* text-transform: lowercase; */
-    height: 45px;
+    height: 55px;
     display: block;
 }
 
 .title {
     /* display: block; */
     /* text-transform: lowercase; */
-    color: rgb(161, 148, 188);
-    text-shadow: 1px 1px 1px black;
+    color: rgb(135, 127, 152);
+    /* text-shadow: 1px 1px 1px black; */
     text-transform: capitalize;
-    z-index: 5;
+    /* z-index: 5; */
 }
 
 .preview-body {
@@ -51,7 +48,7 @@
     width: 180px;
     height: 275px;
     margin: auto;
-    z-index: 3;
+    /* z-index: 3; */
 }
 
 .year-container {
@@ -62,11 +59,11 @@
     padding: 0;
 }
 .genre {
-    border: 1px solid;
+    border: 1px solid #dcc3c3;
     list-style-type: none;
     padding: 5px;
     margin: 0 5px;
-    border-radius: 20px;
+    border-radius: 8px;
     min-width: 60px;
-    background-color: #d1bbbb;
+    background-color: #e4dee8;
 }

@@ -8,13 +8,14 @@ import MovieService from './services/MovieService';
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt, faUndo, faSave } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { faEdit, faTrashAlt, faUndo, faSave, faVideo } from '@fortawesome/free-solid-svg-icons'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 library.add(faEdit)
 library.add(faTrashAlt)
 library.add(faUndo)
 library.add(faSave)
+library.add(faVideo)
 
 
 class App extends Component {

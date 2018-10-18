@@ -26,18 +26,23 @@
 .sub-title>p {
     font-size: 2em;
     /* margin-right: 20px; */
-    margin: auto;
+    margin-top: 10px;
     font-family: 'Dosis', sans-serif;
     /* z-index: 5; */
 }
 
 .add-btn {
-    width: 100px !important;
     margin-left: 20px;
-    font-family: 'Dosis', sans-serif;
-    color: white;
-    border-radius: 11px;
-    background-color: rgb(161, 148, 188);
+    /* font-family: 'Dosis', sans-serif; */
+    /* color: white; */
+    /* border-radius: 11px; */
+    font-size: 1.2em;
+    /* background-color: rgb(161, 148, 188); */
+    /* cursor: pointer; */
+}
+.add-btn>span {
+    margin-right: 5px;
+    font-weight: bold;
 }
 .movie-preview {
     margin: auto;

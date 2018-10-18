@@ -9,7 +9,7 @@ var MOVIES = null;
 function loadMovies() {
     // console.log(MOVIES);
     if (MOVIES === null) {
-        return axios.get(`http://www.omdbapi.com/?s=job&type=movie&page=3&apikey=${API_KEY}`)
+        return axios.get(`https://www.omdbapi.com/?s=job&type=movie&page=3&apikey=${API_KEY}`)
         .then(res => {
             // console.log(res.data.Search);            
             MOVIES = [];
@@ -17,6 +17,9 @@ function loadMovies() {
             res.data.Search.forEach(movie => {
                 prms.push(getMovieById(movie.imdbID)
                 .then (data  => {
+                    // var date = new Date();
+                    // date.setTime(Date.parse(data.Released));
+                    // data.Released = data;
                     // console.log('movie from service: ', movie);                
                     MOVIES.push(data)
                     // console.log('movies:', MOVIES);
@@ -25,6 +28,14 @@ function loadMovies() {
             return Promise.all(prms);
             // MOVIES = res.data.Search;
         }).then ( () => {
+
+            MOVIES.sort( (a,b) => {
+                var timeA = a.Runtime.toLowerCase();
+                var timeB = b.Runtime.toLowerCase();
+                if (timeA < timeB) return -1;
+                if (timeA > timeB) return 1;
+                return 0;            
+            })
             // console.log('service:', MOVIES);
             return MOVIES
         })
@@ -36,7 +47,7 @@ function getMovies() {
 }
 
 function getMovieById(id) {
-    return axios.get(`http://www.omdbapi.com/?i=${id}&page=2&apikey=${API_KEY}`)
+    return axios.get(`https://www.omdbapi.com/?i=${id}&page=2&apikey=${API_KEY}`)
         .then(res => {
             // console.log('service:', res.data);
             return res.data
@@ -126,6 +137,13 @@ function _updateMovie(movie) {
       resolve()
     })
   }
+
+  function convertMonth(int) { 
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    for (let i=0; i<months.length; i++) {
+        if (i === int) return months[i]
+    }
+}
 export default {
     getMovies,
     getMovieById,
@@ -133,5 +151,6 @@ export default {
     loadMovies,
     deleteMovie,
     checkDuplicate,
-    searchMovieById
+    searchMovieById,
+    convertMonth
 }

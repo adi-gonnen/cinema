@@ -42,8 +42,13 @@
 }
 
 .btn {
+    align-self: center;
     margin-top: 10px;
-    width: 50px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 1.1em;
+    width: 80px;
 }
 
 .btn:hover {

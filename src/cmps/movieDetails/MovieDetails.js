@@ -62,25 +62,26 @@ export default class MovieDetails extends Component {
             return <Redirect to={`/`} />
         }
         else if (this.state.edit) {
-            return <Redirect to={{pathname: `/movie/edit/${this.props.match.params.movieId}`, refreshMovies: this.props.location.refreshMovies}} />
+            return <Redirect to={`/movie/edit/${this.props.match.params.movieId}`} />
         }
         const movie = this.state.movie;
         var imgSrc = movie.Poster;
         if (imgSrc === null || imgSrc === 'N/A') imgSrc = 'img/movie3.png'
         return (
             <div className="movie-details-container flex column">
-                <h2 className="title-details">{movie.Title}</h2>
+                <h2 className="title title-details">{movie.Title}</h2>
                 <div className="movie-details flex column">
                     <div className="details-container flex">
                         <img src={imgSrc || 'img/movie3.png'} alt=""/>
                         <div className="movie-text flex column">
                         {/* <div class="movie-info flex column"> */}
-                            <p className="director"><span>Directed by: </span>{movie.Director}</p>
-                            <p className="actors"><span>Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
-                            <p className="rating"><span>IMDb rating: </span>{movie.imdbRating? movie.imdbRating: '2.5'}/10</p>
+                            <p className="director"><span className="bold">Directed by: </span>{movie.Director}</p>
+                            <p className="actors"><span className="bold">Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
+                            <p className="rating"><span className="bold">IMDb rating: </span>{movie.imdbRating? movie.imdbRating: '2.5'}/10</p>
+                            <p className="released"><span className="bold">Released: </span>{movie.Released}</p>
                         {/* </div> */}
                             <div className="year-container flex">
-                                <p className="year">{movie.Year},&nbsp;</p>
+                                {/* <p className="year">{movie.Year},&nbsp;</p> */}
                                 <p className="runtime"> {movie.Runtime},&nbsp;</p>
                                 <p className="language"> {movie.Language? movie.Language: 'Jibrish'}</p>
                             </div>
