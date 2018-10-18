@@ -1,21 +1,25 @@
 .movie-container {
     border: 1px solid  #e2d7d7;
-    box-shadow: 12px 12px 2px 1px rgba(98, 98, 132, 0.2);
+    /* box-shadow: 12px 12px 2px 1px rgba(98, 98, 132, 0.2); */
     text-align: center;
     background-color: #efefef;
     color: rgb(39, 24, 24);
     width: 300px;
-    height: 480px;
+    height: 510px;
     min-height: 200px;
     margin: 20px;
     padding: 10px;
     justify-content: space-between;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 1px 1px 20px 2px #4e4d4d;
+
 }
 .bold {
     font-weight: bold;
 }
-
+.director {
+    height: 35px;
+}
 /* .director>span {
     font-weight: bold;
 } */
@@ -38,7 +42,7 @@
 .title {
     /* display: block; */
     /* text-transform: lowercase; */
-    color: rgb(135, 127, 152);
+    color: #837090;
     /* text-shadow: 1px 1px 1px black; */
     text-transform: capitalize;
     /* z-index: 5; */
@@ -50,26 +54,26 @@
 .a-img>img {
     width: 180px;
     height: 275px;
-    margin: auto;
-    box-shadow: 10px 3px 7px 1px rgba(98, 98, 132, 0.5)
-    /* z-index: 3; */
+    margin: 10px auto;
+    box-shadow: 5px 3px 7px 1px rgba(98, 98, 132, 0.5);
 }
 
 .year-container {
-    margin: 0 auto;
+    margin: 10px auto;
 }
 .genre-list {
     margin: auto;
+    font-size: 0.85em;
     padding: 0;
 }
 .genre {
     border: 1px solid #dcc3c3;
     list-style-type: none;
-    padding: 5px;
+    padding: 4px;
     margin: 0 5px;
     border-radius: 8px;
     border-radius: 4px;
-    min-width: 80px;
+    min-width: 50px;
 }
 
 @media (max-width: 540px) {

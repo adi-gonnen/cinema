@@ -55,7 +55,7 @@
     .details-container>img {
         width: 200px;
         height: 250px;
-        margin: auto;
+        margin: 10px auto;
     }
     .movie-details {
         height: 575px;
@@ -63,5 +63,6 @@
     }
     .title-details {
         font-size: 1.5em;
+        margin-top: 10px
     }
 }

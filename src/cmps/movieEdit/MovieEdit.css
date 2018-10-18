@@ -1,6 +1,7 @@
 
 .edit {
     margin: auto;
+    font-family: 'Ubuntu', sans-serif;
     /* width: 75%; */
 }
 
@@ -9,6 +10,7 @@
     margin: auto;
     border: 1px solid;
     padding: 10px;
+    background-color: rgb(221, 215, 233, 0.5);
 }
 .input-edit {
     margin: 10px;
@@ -44,13 +46,14 @@
 .btn {
     align-self: center;
     margin-top: 10px;
-    background-color: #837090;
-    color: white;
+    background-color: #ddd7e9;
+    color: #4a4646;
     padding: 7px 5px 5px 5px;
     border-radius: 3px;
     font-size: 1em;
     width: 80px;
     height: 34px;
+    box-shadow: 4px 3px 7px 0px #818181;
 }
 
 .btn:hover {

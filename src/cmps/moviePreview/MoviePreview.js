@@ -9,7 +9,7 @@ import './MoviePreview.css';
 class MoviePreview extends Component {
     state = {
         movie: this.props.movie,
-        back: false,
+        // back: false,
         edit: false,
         info: false
     }
@@ -30,7 +30,8 @@ class MoviePreview extends Component {
     delete = () => {
         MovieService.deleteMovie(this.state.movieId)
         .then ( () => {
-            this.setState({back: !this.state.back})
+            // this.setState({back: !this.state.back})
+            console.log('deleted');            
         })
     }
     details = () => {
@@ -38,10 +39,10 @@ class MoviePreview extends Component {
     }
     render() {
         const movie = this.state.movie;
-        if (this.state.back) {
-            return <Redirect to={`/movie`} />
-        }
-        else if (this.state.edit) {
+        // if (this.state.back) {
+        //     return <Redirect to={`/movie`} />
+        // }
+        if (this.state.edit) {
             // return <Redirect to={`/movie/edit/${movie.imdbID}`}/>
             return <Redirect to={{pathname: `/movie/edit/${movie.imdbID}`, movie: this.state.movie}} />
         }
@@ -58,27 +59,27 @@ class MoviePreview extends Component {
             {/* <div className="preview-body flex column"> */}
             <Link to={`/movie/${movie.imdbID}`} movie={movie} className="a-img">
                 <img src={imgSrc || 'img/movie3.png'} alt=""/>
-                </Link>
-                <p className="director"><span className="bold">Directed by: </span>{movie.Director}</p>
-                <div className="year-container flex">
-                    <p className="year">{movie.Year},&nbsp;</p>
-                    <p className="runtime"> {movie.Runtime}</p>
-                    {/* <p>{movie.imdbRating}</p> */}
-                </div>
-                <ul className="genre-list flex">
-                    {movie.Genre.split(',').map(type => (
-                        <li className="genre" key={type.id}>{type}</li>
-                        ))}
-                </ul>
+            </Link>
+            <p className="director"><span className="bold">Directed by: </span>{movie.Director}</p>
+            <div className="year-container flex">
+                <p className="year">{movie.Year},&nbsp;</p>
+                <p className="runtime"> {movie.Runtime}</p>
+                {/* <p>{movie.imdbRating}</p> */}
+            </div>
+            <ul className="genre-list flex">
+                {movie.Genre.replace(/,/g,"").split(' ').map(type => (
+                    <li className="genre" key={type}>{type}</li>
+                    ))}
+            </ul>
                 {/* <p className="genre">{movie.Genre.split(',')}</p> */}
             {/* </div> */}
             <div className="btns flex">
                 <button className="btn btn-edit" onClick={this.editMovie}>
                     <FontAwesomeIcon icon="edit" title="edit"/>
                 </button>
-                <button className="btn btn-delete ml15" onClick={this.delete}>
+                {/* <button className="btn btn-delete ml15" onClick={this.delete}>
                     <FontAwesomeIcon icon="trash-alt" title="delete"/>
-                </button>
+                </button> */}
                 <button className="btn btn-info ml15" onClick={this.details}>
                     <FontAwesomeIcon icon="info" title="details"/>
                 </button>

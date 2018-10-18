@@ -1,7 +1,6 @@
 import React , { Component } from 'react';
 import MoviePreview from '../moviePreview/MoviePreview';
 import MovieService from '../../services/MovieService';
-import {Link} from 'react-router-dom';
 import { Route, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Home.css';
@@ -42,7 +41,7 @@ export default class Home extends Component {
         return (
         <div className="movies flex column">
             <div className="sub-title flex">
-                <p>Let's watch some movies!</p>
+                <p>let's watch some movies!</p>
                 <button onClick={this.addMovie} className="btn add-btn">
                 <div className="flex plus-add">
                     {/* <span>+</span> */}

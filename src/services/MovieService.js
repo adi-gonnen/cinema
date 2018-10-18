@@ -55,11 +55,11 @@ function getMovieById(id) {
 }
 
 function searchMovieById(id) {
-    console.log('id service:', id);
+    // console.log('id service:', id);
     var movie = {};
     MOVIES.some(currMovie => {
         if (id === currMovie.imdbID) {
-            console.log('movie-service:', currMovie);
+            // console.log('movie-service:', currMovie);
             movie = currMovie;
         }
     })
@@ -67,7 +67,7 @@ function searchMovieById(id) {
 }
 
 function _updateMovie(movie) {
-    // console.log('movie to update: ', movie.Title);    
+    console.log('movies before save: ', MOVIES);    
     return new Promise((resolve, reject) => { 
         // console.log('_update ', MOVIES[0]);        
         const idx = MOVIES.findIndex( m => movie.imdbID === m.imdbID)
@@ -83,6 +83,7 @@ function _updateMovie(movie) {
             className: "swal-text",
             button: false
         });
+        console.log('movies after save: ', MOVIES);    
     })
   }
   
@@ -103,16 +104,16 @@ function _updateMovie(movie) {
     })
   }
   
-  function checkDuplicate(newMovie) {
+  function checkDuplicate(title, id) {
     var duplicate = false;
     MOVIES.some(movie => {
         // console.log('name:', movie.Title);
-        if (newMovie.Title === movie.Title) {
-            if (newMovie.imdbID !== movie.imdbID) {         //not the same movie
+        if (title.toLowerCase() === movie.Title.toLowerCase()) {
+            if (id !== movie.imdbID) {         //not the same movie
                 duplicate = true;
                 swal("This movie already Exist!").then( () => {
                     // console.log('duplicate1: ', duplicate);    
-                    return false;
+                    return;
                 })
                 // return false
             }
@@ -122,25 +123,11 @@ function _updateMovie(movie) {
   }
 
   function saveMovie(newMovie) {
-    var duplicate = false;
-    MOVIES.some(movie => {
-        // console.log('name:', movie.Title);
-        if (newMovie.Title.toLowerCase() === movie.Title.toLowerCase()) {
-            if (newMovie.imdbID !== movie.imdbID) {         //not the same movie
-                duplicate = true;
-                swal("This movie already Exist!").then( () => {
-                    // console.log('duplicate1: ', duplicate);    
-                    return false;
-                })
-                // return false
-            }
-        }
-    });
-    // console.log('duplicate2: ', duplicate);    
-    if (!duplicate) return newMovie.imdbID ? _updateMovie(newMovie) : _addMovie(newMovie)
+    return newMovie.imdbID ? _updateMovie(newMovie) : _addMovie(newMovie)
   }
 
   function deleteMovie(id) {
+    console.log('movies before delete: ', MOVIES); 
     return swal({
         title: "Are you sure you want to delete this movie?",
         icon: "warning",
@@ -153,10 +140,12 @@ function _updateMovie(movie) {
                 const idx = MOVIES.findIndex( movie => movie.imdbID === id)
                 if (idx !== -1) {
                   MOVIES.splice(idx, 1)
-                  console.log('deleted!');        
+                //   console.log('deleted!');        
                 }
+                console.log('movies after delete: ', MOVIES); 
                 resolve()
-              })
+                // return MOVIES;
+            })
             .then(() => {
                 // this.setState({cancel: !this.state.cancel})
                 swal("Your movie has been deleted!", {

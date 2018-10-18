@@ -76,8 +76,12 @@ export default class MovieDetails extends Component {
                     title = newTitle; 
                 }
         }
-        const duplicate = MovieService.checkDuplicate(movie);
-        if (duplicate) return;
+        const duplicate = MovieService.checkDuplicate(title, this.state.movieId);
+        if (duplicate) {
+            // this.setState({cancel: !this.state.cancel});
+            console.log('this.state.cancel', this.state.cancel);            
+            return;
+        }
         movie.Title = title;
         event.preventDefault();
         MovieService.saveMovie(movie);
