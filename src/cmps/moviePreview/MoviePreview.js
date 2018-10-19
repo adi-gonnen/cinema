@@ -44,11 +44,13 @@ class MoviePreview extends Component {
                 <p className="year">{movie.Year},&nbsp; &nbsp;</p>
                 <p className="runtime"> {movie.Runtime}</p>
             </div>
-            <ul className="genre-list flex">
-                {movie.Genre.replace(/,/g,"").split(' ').map(type => (
-                    <li className="genre" key={type}>{type}</li>
-                    ))}
-            </ul>
+            <div className="genre-list flex">
+                <ul className="ul-genre flex">
+                    {movie.Genre.replace(/,/g,"").split(' ').map(type => (
+                        <li className="genre" key={type}>{type}</li>
+                        ))}
+                </ul>
+            </div>
             <div className="btns flex">
                 <button className="btn btn-edit" onClick={this.editMovie}>
                     <FontAwesomeIcon icon="edit" title="edit"/>

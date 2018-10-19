@@ -40,13 +40,14 @@ export default class MovieDetails extends Component {
         }
         const movie = this.state.movie;
         var imgSrc = movie.Poster;
-        if (imgSrc === null || imgSrc === 'N/A') imgSrc = 'img/movie3.png'
+        if (imgSrc === null || imgSrc === 'N/A') imgSrc = 'img/movie3.png';
+
         return (
             <div className="movie-details-container flex column">
                 <h2 className="title title-details">{movie.Title}</h2>
                 <div className="movie-details flex column">
                     <div className="details-container flex">
-                        <img src={imgSrc || 'img/movie3.png'} alt=""/>
+                    <img src={imgSrc || 'img/movie3.png'} alt=""/>
                         <div className="movie-text flex column">
                             <p className="director mb15"><span className="bold">Directed by: </span>{movie.Director}</p>
                             <p className="actors mb15"><span className="bold">Actors: </span>{movie.Actors? movie.Actors: 'Gal Gadot' }</p>
