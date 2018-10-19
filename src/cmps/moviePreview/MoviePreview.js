@@ -24,16 +24,21 @@ class MoviePreview extends Component {
         else if (this.state.info) {
             return <Redirect to={`/movie/${movie.imdbID}`} />
         }
-        var imgSrc = movie.Poster;
-        if (imgSrc === null || imgSrc === 'N/A') imgSrc = 'img/movie3.png'
+        var imgSrc = null
+        if (!movie.Poster || movie.Poster === 'N/A') imgSrc = 'img/movie3.png';
+        else imgSrc = movie.Poster;
+        const imgStyle = {
+            backgroundImage: 'url(' + imgSrc + ')',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            backgroundrepeat: 'no-repeat',
+        }
         return (
         <div className="movie-container flex column">
             <Link to={`/movie/${movie.imdbID}`} movie={movie} className="a-title">
                <h2 className="title">{movie.Title.toLowerCase().substring(0,36)}</h2>
             </Link>
-            <Link to={`/movie/${movie.imdbID}`} movie={movie} className="a-img">
-                <img src={imgSrc || 'img/movie3.png'} alt=""/>
-            </Link>
+            <Link to={`/movie/${movie.imdbID}`} style={imgStyle} movie={movie} className="a-img"/>
             <p className="director"><span className="bold">Directed by: </span>{movie.Director}</p>
             <div className="year-container flex">
                 <p className="year">{movie.Year},&nbsp; &nbsp;</p>
