@@ -5,25 +5,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import swal from "sweetalert";
 import './MovieEdit.css';
 
+// const EditMovie = ({ dispatch }) => {
 export default class MovieDetails extends Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
+    // constructor(props, context) {
+    //     super(props, context);
+        state = {
             cancel: false,
             movieId: this.props.match.params.movieId,
             movie: {},
             movieDate: null
         };
-        this.saveMovie = this.saveMovie.bind(this);  
-    } 
-    componentDidMount() {
+        // this.saveMovie = this.saveMovie.bind(this);  
+    // } 
+    componentDidMount = () => {
         var currMovie = MovieService.searchMovieById(this.state.movieId)
         this.setState({movie: currMovie});
     }
     cancel = () => {
         this.setState({cancel: !this.state.cancel})
     }
-    saveMovie(event) {
+    saveMovie = (event) => {
         const movie = this.state.movie;
         if (this.state.movieDate) movie.Released = this.state.movieDate;
         console.log('movie to be saved:', movie);
@@ -43,7 +44,7 @@ export default class MovieDetails extends Component {
             })
             return
         }
-        var title = movie.Title
+        var title = movie.Title         //delete non-english characters from title
         for (let i=0; i<title.length; i++) {
             var newTitle = title;
             if (
@@ -60,6 +61,7 @@ export default class MovieDetails extends Component {
         if (duplicate) return;
         movie.Title = title;
         event.preventDefault();
+        // dispatch(saveMovie(this.state.movie))
         MovieService.saveMovie(movie);
         this.setState({cancel: !this.state.cancel});
     }
@@ -100,7 +102,7 @@ export default class MovieDetails extends Component {
         newMovie.Genre = event.target.value;
         this.setState({movie: newMovie});
     }
-    delete = () => {
+    deleteMovie = () => {
         MovieService.deleteMovie(this.state.movieId)
         .then ( () => {
             this.setState({cancel: !this.state.cancel})
@@ -153,7 +155,7 @@ export default class MovieDetails extends Component {
                         <button className="btn" onClick={this.saveMovie}>
                             <FontAwesomeIcon icon="save" title="save"/>
                         </button>
-                        <button className="btn btn-delete ml15" onClick={this.delete}>
+                        <button className="btn btn-delete ml15" onClick={this.deleteMovie}>
                             <FontAwesomeIcon icon="trash-alt" title="delete"/>
                         </button>
                         <button className="btn btn-back ml15" onClick={this.cancel}>
@@ -165,3 +167,4 @@ export default class MovieDetails extends Component {
         )
     }
 }
+// export default connect()(EditMovie)

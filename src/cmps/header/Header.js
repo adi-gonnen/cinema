@@ -11,7 +11,7 @@ export default class Header extends Component {
                     <img src="img/movie3.png" className="header-img" alt=""/>
                 </Link>
                 <Link to={"/"}>
-                    <h1 className="header-title">Herolo Cinema</h1>
+                    <h1 className="header-title">My Cinema</h1>
                 </Link>
             </div>
         )

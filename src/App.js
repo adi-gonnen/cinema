@@ -6,7 +6,7 @@ import MovieEdit from './cmps/movieEdit/MovieEdit';
 import MovieDetails from './cmps/movieDetails/MovieDetails';
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faTrashAlt, faUndo, faSave, faVideo, faInfo, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrashAlt, faUndo, faSave, faVideo, faInfo, faPlus, faSearch, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 library.add(faEdit)
@@ -16,6 +16,8 @@ library.add(faSave)
 library.add(faVideo)
 library.add(faInfo)
 library.add(faPlus)
+library.add(faSearch)
+library.add(faChevronCircleRight)
 
 
 class App extends Component {

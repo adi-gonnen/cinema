@@ -11,13 +11,40 @@ export default class Home extends Component {
         this.state = {
             add: false,
             movies: [],  
-            img: null
+            img: null,
+            searchWord: '',
+            numberOfPage: 1
         }
     }
     addMovie = () => {
         this.setState({add: !this.state.add})
     }
+    handleSearch = (event) => {
+        this.searchWord = event.target.value;
+    }
+    searchMovie = () => {
+        console.log(this.searchWord); 
+        this.numberOfPage = 1;       
+        MovieService.addSearchWord(this.searchWord);
+        MovieService.loadMovies()
+        .then(res => {
+            console.log('movies with search: ', res);            
+            this.setState({movies: res});
+        });
+    }
+    nextMovies = () => {
+        console.log('page before: ', this.state.numberOfPage);        
+        this.setState({numberOfPage: +this.state.numberOfPage + 1});
+        console.log('page after: ', this.state.numberOfPage);        
+        MovieService.getNextPage(this.state.numberOfPage);
+        MovieService.loadMovies()
+        .then(res => {
+            console.log('movies with search: ', res);            
+            this.setState({movies: res});
+        });
+    }
     componentDidMount() {
+        console.log('page did mount: ', this.state.numberOfPage);   
         MovieService.loadMovies()
         .then(res => {
             this.setState({movies: res});
@@ -31,12 +58,28 @@ export default class Home extends Component {
         return (
         <div className="movies flex column">
             <div className="sub-title flex">
-                <p>let's watch some movies!</p>
-                <button onClick={this.addMovie} className="btn add-btn">
-                <div className="flex plus-add">
-                    <FontAwesomeIcon icon="plus" title="add movie"/>
+                <p>search movies:</p>
+                <div className="serach-container flex">
+                    <input placeholder="enter key word/s" className="search-line"
+                        onChange={this.handleSearch}/>
+                    <button onClick={this.searchMovie} className="btn search-btn">
+                        <div className="flex search">
+                            <FontAwesomeIcon icon="search" title="search movie"/>
+                        </div>
+                    </button>
                 </div>
-                </button>
+                <div className="btns-home-container flex">
+                    <button onClick={this.nextMovies} className="btn next-btn">
+                        <div className="flex next-arrow">
+                            <FontAwesomeIcon icon="chevron-circle-right" title="next 10 movies"/>
+                        </div>
+                    </button>
+                    <button onClick={this.addMovie} className="btn add-btn">
+                        <div className="flex plus-add">
+                            <FontAwesomeIcon icon="plus" title="add movie"/>
+                        </div>
+                    </button>
+                </div>
             </div>
             <div className="movie-preview">
                 <ul className="movies-list flex">

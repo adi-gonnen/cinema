@@ -4,23 +4,33 @@ import uniqid from 'uniqid'
 import swal from "sweetalert";
 const API_KEY = 'cf5f5d9f';
 var MOVIES = null;
+var TEMPMOVIES = [];
+var KEYWORD = 'job';
+var PAGE = 3;
 
 
 function loadMovies() {
     if (MOVIES === null) {
-        return axios.get(`https://www.omdbapi.com/?s=job&type=movie&page=3&apikey=${API_KEY}`)
+        return axios.get(`https://www.omdbapi.com/?s=${KEYWORD}&page=${PAGE}&type=movie&apikey=${API_KEY}`)
         .then(res => {
-            MOVIES = [];
-            var prms = []
-            res.data.Search.forEach(movie => {
-                prms.push(getMovieById(movie.imdbID)
-                .then (data  => {
-                    MOVIES.push(data)
-                }))
-            })
-            return Promise.all(prms);
+            if (res.data.Error === "Too many results.") {
+                swal("Too many results. Try to be more specific").then( () => {
+                    return;
+                })
+                MOVIES = TEMPMOVIES;
+            } else {
+                MOVIES = [];
+                var prms = []
+                res.data.Search.forEach(movie => {
+                    prms.push(getMovieById(movie.imdbID)
+                    .then (data  => {
+                        MOVIES.push(data)
+                    }))
+                })
+                return Promise.all(prms);
+            }
         }).then ( () => {
-
+            console.log('then:' , MOVIES);    
             MOVIES.sort( (a,b) => {
                 var timeA = a.Runtime.toLowerCase();
                 var timeB = b.Runtime.toLowerCase();
@@ -28,7 +38,7 @@ function loadMovies() {
                 if (timeA > timeB) return 1;
                 return 0;            
             })
-            console.log('movies:', MOVIES);            
+            // console.log('movies:', MOVIES);            
             return MOVIES
         })
     } else return Promise.resolve(MOVIES);
@@ -36,6 +46,20 @@ function loadMovies() {
 
 function getMovies() {
     if (MOVIES !== null) return MOVIES
+}
+
+function addSearchWord(word) {
+    word === ''? KEYWORD = 'first': KEYWORD = word;
+    PAGE = 1;
+    TEMPMOVIES = MOVIES;
+    MOVIES = null;
+    console.log('key word: ', KEYWORD);    
+}
+
+function getNextPage(number) {
+    PAGE = number;
+    MOVIES = null;
+    console.log('page-service: ', PAGE);  
 }
 
 function getMovieById(id) {
@@ -94,7 +118,7 @@ function _updateMovie(movie) {
             if (id !== movie.imdbID) {         //not the same movie
                 duplicate = true;
                 swal("This movie already exist!").then( () => {
-                    return;
+                    return duplicate;
                 })
             }
         }
@@ -143,6 +167,8 @@ function convertMonth(int) {
 export default {
     getMovies,
     getMovieById,
+    addSearchWord,
+    getNextPage,
     saveMovie,
     loadMovies,
     deleteMovie,
